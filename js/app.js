@@ -23,8 +23,10 @@ function findEventTarget() {
   }
   threeRandomPictures();
   clicksLeft--;
+  // Stop event listener
   if (clicksLeft === 0) {
     parentElement.removeEventListener('click',findEventTarget);
+    parentElement.removeAttribute('id'); // Removes pointer from mouse
     resultsList();
   }
 }
@@ -60,6 +62,7 @@ function appendImage(imageNumber) {
   parentElement.appendChild(picture);
 }
 
+// Show voting results
 function resultsList() {
   var listParent = document.getElementById('results');
   var productResult;
