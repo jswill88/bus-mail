@@ -1,8 +1,10 @@
+
 body {
   width: 1024px;
   margin: 0 auto;
   font-family: Arial, Helvetica, sans-serif;
 }
+
 
 header {
   height: 50px;
@@ -55,4 +57,6 @@ main img {
 
 #chart-section{
   float:left;
+  height: 625px;
+  overflow: scroll;
 }

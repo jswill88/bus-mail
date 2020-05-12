@@ -5,8 +5,6 @@ var totalVotes = [];
 var totalTimesShown = [];
 var productsArray = [];
 var itemsDisplayed = [];
-var chartColors = [];
-var chartBorderColors = [];
 var clicksLeft = 25;
 var parentElement = document.getElementById('products');
 parentElement.addEventListener('click',findEventTarget);
@@ -35,7 +33,6 @@ function findEventTarget() {
     parentElement.removeAttribute('id'); // Removes pointer from mouse
     resultsList();
     clicksAndTimesShown();
-    makeChartColors();
     renderChart();
   }
 }
@@ -89,39 +86,53 @@ function clicksAndTimesShown() {
     totalTimesShown.push(productsArray[i].timesShown);
   }
 }
-function makeChartColors() {
-  var red = randomNumber(100);
-  var green = randomNumber(100);
-  var blue = randomNumber(30);
-  for(var i = 0; i < productsArray.length; i++){
-    var color = `rgba(${red},${green},${blue},.3)`;
-    var borderColor = `rgba(${red},${green},${blue},1)`;
-    chartColors.push(color);
-    chartBorderColors.push(borderColor);
-    red += 8;
-    green +=10;
-  }
-}
 
 function renderChart() {
   var ctx = document.getElementById('resultsChart').getContext('2d');
+  // eslint-disable-next-line no-unused-vars, no-undef
   var resultsChart = new Chart(ctx, {
-    type: 'bar',
+    type: 'horizontalBar',
     data: {
       labels: titlesArray,
       datasets: [{
         label: '# of Votes',
         data: totalVotes,
-        backgroundColor: chartColors,
-        borderColor: chartBorderColors,
-        borderWidth: 1
-      }]
+        backgroundColor: 'rgba(0,250,154,.4)',
+        borderColor: 'rgba(0,250,154,1)',
+        hoverBackgroundColor: 'rgba(0,250,154,1)',
+        borderWidth: 2,
+        minBarLength: 2
+      },
+      {
+        label: 'Total Times Shown',
+        data: totalTimesShown,
+        backgroundColor: 'rgba(72,209,204,.1)',
+        borderColor: 'rgba(72,209,204,1)',
+        hoverBackgroundColor: 'rgba(72,209,204,.3)',
+        borderWidth: 2,
+        minBarLength: 2
+      },
+      ]
     },
     options: {
+      tooltips: {
+        backgroundColor: 'black',
+      },
+      title: {
+        display: true,
+        position: 'top',
+        text: 'Voting Results',
+        fontSize: 20
+      },
       scales: {
         yAxes: [{
+          stacked: true,
+        }],
+        xAxes: [{
           ticks: {
-            beginAtZero: true
+            beginAtZero: true,
+            precision: 0,
+            stepSize: 1
           }
         }]
       }
