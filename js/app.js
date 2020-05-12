@@ -1,7 +1,12 @@
 'use strict';
 
+var titlesArray = [];
+var totalVotes = [];
+var totalTimesShown = [];
 var productsArray = [];
 var itemsDisplayed = [];
+var chartColors = [];
+var chartBorderColors = [];
 var clicksLeft = 25;
 var parentElement = document.getElementById('products');
 parentElement.addEventListener('click',findEventTarget);
@@ -13,6 +18,7 @@ function Product(image, title) {
   this.numberOfClicks = 0;
   this.timesShown = 0;
   productsArray.push(this);
+  titlesArray.push(this.title);
 }
 
 function findEventTarget() {
@@ -28,6 +34,9 @@ function findEventTarget() {
     parentElement.removeEventListener('click',findEventTarget);
     parentElement.removeAttribute('id'); // Removes pointer from mouse
     resultsList();
+    clicksAndTimesShown();
+    makeChartColors();
+    renderChart();
   }
 }
 
@@ -74,6 +83,52 @@ function randomNumber(arrayLength) {
   return Math.floor(Math.random()*arrayLength);
 }
 
+function clicksAndTimesShown() {
+  for (var i = 0; i < productsArray.length; i++){
+    totalVotes.push(productsArray[i].numberOfClicks);
+    totalTimesShown.push(productsArray[i].timesShown);
+  }
+}
+function makeChartColors() {
+  var red = randomNumber(100);
+  var green = randomNumber(100);
+  var blue = randomNumber(30);
+  for(var i = 0; i < productsArray.length; i++){
+    var color = `rgba(${red},${green},${blue},.3)`;
+    var borderColor = `rgba(${red},${green},${blue},1)`;
+    chartColors.push(color);
+    chartBorderColors.push(borderColor);
+    red += 8;
+    green +=10;
+  }
+}
+
+function renderChart() {
+  var ctx = document.getElementById('resultsChart').getContext('2d');
+  var resultsChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: titlesArray,
+      datasets: [{
+        label: '# of Votes',
+        data: totalVotes,
+        backgroundColor: chartColors,
+        borderColor: chartBorderColors,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }]
+      }
+    }
+  });
+}
+
 new Product('img/bag.jpg','R2D2 Luggage');
 new Product('img/banana.jpg','Banana Slicer');
 new Product('img/bathroom.jpg','Toilet Paper Tablet Holder');
@@ -96,3 +151,4 @@ new Product('img/water-can.jpg','Self Filling Water Can');
 new Product('img/wine-glass.jpg','Modern Wine Glass');
 
 threeRandomPictures();
+

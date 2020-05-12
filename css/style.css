@@ -51,3 +51,8 @@ main img {
 #products img{
  cursor: pointer;
 }
+
+
+#chart-section{
+  float:left;
+}
