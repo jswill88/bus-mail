@@ -8,12 +8,11 @@ parentElement.addEventListener('click',findEventTarget);
 function Product(image, title) {
   this.image = image;
   this.alt = title;
-  this.title = this.alt;
+  this.title = title;
   this.numberOfClicks = 0;
   this.timesShown = 0;
   productsArray.push(this);
 }
-
 
 function findEventTarget() {
   for (var i = 0; i < productsArray.length; i++) {
