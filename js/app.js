@@ -6,7 +6,7 @@ var totalTimesShown = [];
 var productsArray = [];
 var productsArrayfromStorage = [];
 var itemsDisplayed = [];
-var clicksLeft = 25;
+var clicksLeft = 1;
 var parentElement = document.getElementById('products');
 parentElement.addEventListener('click',findEventTarget);
 
@@ -78,7 +78,13 @@ function appendImage(imageNumber) {
 
 // Show voting results
 function resultsList() {
+  var resultsSection = document.getElementById('results-section');
+  resultsSection.removeChild(resultsSection.childNodes[1]);
+  document.getElementById('arrow').textContent = '';
   var listParent = document.getElementById('results');
+  var resultsHeader = document.createElement('h2');
+  resultsHeader.textContent = 'Results for this session';
+  listParent.appendChild(resultsHeader);
   var productResult;
   for (var i = 0; i < productsArray.length; i++) {
     productResult = document.createElement('li');
