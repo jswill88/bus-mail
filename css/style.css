@@ -110,6 +110,20 @@ main img:last-child {
 #blackBackground {
   background-color: black;
 }
+#about {
+  color: white;
+  background-color: black;
+  width: 984px;
+  margin: 10px 0 10px 0;
+  float: left;
+  padding: 20px;
+  line-height: 19px;
+}
+#about h2{
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
 footer {
   height: 10px;
   width: 984px;
