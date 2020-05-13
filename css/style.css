@@ -27,6 +27,9 @@ h1 {
   margin: 10px;
   font-family: 'Bungee Inline', cursive;
 }
+h1 a:hover {
+  text-decoration: none;
+}
 a {
   font: inherit;
   text-decoration: inherit;
@@ -115,4 +118,9 @@ footer {
   color: white;
   text-align: center;
   padding: 20px;
+
+}
+
+button {
+  float: right;
 }

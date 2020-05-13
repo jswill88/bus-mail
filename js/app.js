@@ -6,9 +6,11 @@ var totalTimesShown = [];
 var productsArray = [];
 var productsArrayfromStorage = [];
 var itemsDisplayed = [];
-var clicksLeft = 1;
+var clicksLeft = 25;
 var parentElement = document.getElementById('products');
 parentElement.addEventListener('click',findEventTarget);
+var resetButton = document.getElementById('clearMemory');
+resetButton.addEventListener('click',removeLocalStorage);
 
 function Product(image, title) {
   this.image = image;
@@ -30,28 +32,14 @@ function findEventTarget() {
   clicksLeft--;
   // Stop event listener
   if (clicksLeft === 0) {
-    parentElement.removeEventListener('click',findEventTarget);
-    parentElement.removeAttribute('id'); // Removes pointer from mouse
-
-    resultsList();
-
-    if (localStorage.getItem('busMallProducts') !== null){
-      for (var j = 0; j < productsArray.length; j++) {
-        productsArray[j].numberOfClicks += productsArrayfromStorage[j].numberOfClicks;
-        productsArray[j].timesShown += productsArrayfromStorage[j].timesShown;
-      }
-    }
-    clicksAndTimesShown();
-    renderChart();
-    var stringinfiedProducts = JSON.stringify(productsArray);
-    localStorage.setItem('busMallProducts', stringinfiedProducts);
+    endOfVotes();
   }
 }
 
 function threeRandomPictures() {
   parentElement.textContent = '';
   if (itemsDisplayed.length === 6){
-  // Get rid of index from 2 displays ago
+    // Get rid of index from 2 displays ago
     for(var i = 0; i < 3; i ++){
       itemsDisplayed.shift();
     }
@@ -113,6 +101,33 @@ function clicksAndTimesShown() {
     totalVotes.push(productsArray[i].numberOfClicks);
     totalTimesShown.push(productsArray[i].timesShown);
   }
+}
+
+// What to do when votes run out
+function endOfVotes() {
+  parentElement.removeEventListener('click',findEventTarget);
+  parentElement.removeAttribute('id'); // Removes pointer from mouse
+  resultsList();
+  if (localStorage.getItem('busMallProducts') !== null){
+    for (var j = 0; j < productsArray.length; j++) {
+      productsArray[j].numberOfClicks += productsArrayfromStorage[j].numberOfClicks;
+      productsArray[j].timesShown += productsArrayfromStorage[j].timesShown;
+    }
+  }
+  clicksAndTimesShown();
+  renderChart();
+  var stringinfiedProducts = JSON.stringify(productsArray);
+  localStorage.setItem('busMallProducts', stringinfiedProducts);
+}
+
+// Removes local storage and resets click counter, votes, and times shown
+function removeLocalStorage(){
+  localStorage.removeItem('busMallProducts');
+  for (var i = 0; i < productsArray.length; i++) {
+    productsArray[i].timesShown = 0;
+    productsArray[i].numberOfClicks = 0;
+  }
+  clicksLeft = 25;
 }
 
 function renderChart() {
