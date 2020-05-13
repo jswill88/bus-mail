@@ -114,7 +114,7 @@ main img:last-child {
   color: white;
   background-color: black;
   width: 984px;
-  margin: 10px 0 10px 0;
+  margin-bottom: 10px;
   float: left;
   padding: 20px;
   line-height: 19px;
