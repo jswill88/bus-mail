@@ -3,7 +3,7 @@ body {
   width: 1024px;
   margin: 0 auto;
   font-family: Arial, Helvetica, sans-serif;
-  background-image: linear-gradient(to bottom right,rgb(59, 202, 142),rgb(0, 0, 0));
+  background-image: linear-gradient(to top,rgb(24, 23, 23),white);
 }
 header {
   height: 50px;
