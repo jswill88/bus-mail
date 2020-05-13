@@ -82,11 +82,22 @@ function resultsList() {
   var productResult;
   for (var i = 0; i < productsArray.length; i++) {
     productResult = document.createElement('li');
-    productResult.textContent = `${productsArray[i].title} had ${productsArray[i].numberOfClicks} votes and was shown ${productsArray[i].timesShown} times`;
+    var sentenceFirstHalf;
+    var sentenceSecondHalf;
+    if (productsArray[i].numberOfClicks === 1) {
+      sentenceFirstHalf = `${productsArray[i].title} had 1 vote `;
+    } else {
+      sentenceFirstHalf = `${productsArray[i].title} had ${productsArray[i].numberOfClicks} votes `;
+    }
+    if (productsArray[i].timesShown === 1) {
+      sentenceSecondHalf = 'and was shown 1 time';
+    } else {
+      sentenceSecondHalf = `and was shown ${productsArray[i].timesShown} times`;
+    }
+    productResult.textContent = sentenceFirstHalf + sentenceSecondHalf;
     listParent.appendChild(productResult);
   }
 }
-
 function randomNumber(arrayLength) {
   return Math.floor(Math.random()*arrayLength);
 }
