@@ -14,10 +14,12 @@ header {
   color: white;
 }
 header img {
-  width: 120px;
-  height: 30px;
+  width: 160px;
   float: left;
-  padding-top: 20px;
+  margin-top: 7px;
+  margin-right: 10px;
+  border-radius: 20px;
+  box-shadow: white 3px 3px 3px, white -3px -3px 3px;
 }
 h1 {
   font-size: 3em;
@@ -25,10 +27,13 @@ h1 {
   margin: 10px;
   font-family: 'Bungee Inline', cursive;
 }
-nav a {
+a {
   font: inherit;
   text-decoration: inherit;
   color: inherit;
+}
+a:hover {
+  text-decoration: underline;
 }
 nav ul li {
   float: right;
@@ -103,10 +108,11 @@ main img:last-child {
   background-color: black;
 }
 footer {
-  height: 50px;
+  height: 10px;
   width: 1024px;
   background-color: black;
   overflow: hidden;
   color: white;
   text-align: center;
+  padding: 20px;
 }
