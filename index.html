@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 <html>
-
+  
   <head>
-    <title>BusMail</title>
+    <title>BusMall</title>
     <link href="css/reset.css" rel="stylesheet" type="text/css" />
     <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <script src ="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.bundle.min.js"></script>
   </head>
   
   <body>
   <header>
     <img src="https://via.placeholder.com/120x30" />
-    <h1>BusMail</h1>
+    <h1>BusMall</h1>
     <nav>
       <ul>
         <li>Home</li>
@@ -27,11 +28,15 @@
     </section>
     
     <section id="products"></section>
+    <section id="chart-section">
+      <canvas id="resultsChart" width="775" height="900"></canvas>
+    </section>
   
   </main>
   <footer>
 
   </footer>
+
   <script src="js/app.js"></script>
   
   </body>

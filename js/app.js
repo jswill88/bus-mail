@@ -1,6 +1,10 @@
 'use strict';
 
+var titlesArray = [];
+var totalVotes = [];
+var totalTimesShown = [];
 var productsArray = [];
+var itemsDisplayed = [];
 var clicksLeft = 25;
 var parentElement = document.getElementById('products');
 parentElement.addEventListener('click',findEventTarget);
@@ -12,6 +16,7 @@ function Product(image, title) {
   this.numberOfClicks = 0;
   this.timesShown = 0;
   productsArray.push(this);
+  titlesArray.push(this.title);
 }
 
 function findEventTarget() {
@@ -27,30 +32,29 @@ function findEventTarget() {
     parentElement.removeEventListener('click',findEventTarget);
     parentElement.removeAttribute('id'); // Removes pointer from mouse
     resultsList();
+    clicksAndTimesShown();
+    renderChart();
   }
 }
 
 function threeRandomPictures() {
   parentElement.textContent = '';
-
-  // Figure out images to show
-  var firstIndex = randomNumber(productsArray.length);
-  var secondIndex = randomNumber(productsArray.length);
-  var thirdIndex = randomNumber(productsArray.length);
-
-  while (firstIndex === secondIndex || firstIndex === thirdIndex || secondIndex === thirdIndex) {
-    secondIndex = randomNumber(productsArray.length);
-    thirdIndex = randomNumber(productsArray.length);
+  if (itemsDisplayed.length === 6){
+  // Get rid of index from 2 displays ago
+    for(var i = 0; i < 3; i ++){
+      itemsDisplayed.shift();
+    }
   }
-
-  // Put images on screen
-  appendImage(firstIndex);
-  appendImage(secondIndex);
-  appendImage(thirdIndex);
-  // Update times shown
-  productsArray[firstIndex].timesShown++;
-  productsArray[secondIndex].timesShown++;
-  productsArray[thirdIndex].timesShown++;
+  // Make sure images are unique
+  for (var j = 0; j < 3; j++) {
+    var index = randomNumber(productsArray.length);
+    while(itemsDisplayed.includes(index)){
+      index = randomNumber(productsArray.length);
+    }
+    itemsDisplayed.push(index);
+    appendImage(index);
+    productsArray[index].timesShown++;
+  }
 }
 
 function appendImage(imageNumber) {
@@ -76,6 +80,79 @@ function randomNumber(arrayLength) {
   return Math.floor(Math.random()*arrayLength);
 }
 
+function clicksAndTimesShown() {
+  for (var i = 0; i < productsArray.length; i++){
+    totalVotes.push(productsArray[i].numberOfClicks);
+    totalTimesShown.push(productsArray[i].timesShown);
+  }
+}
+
+function renderChart() {
+  // eslint-disable-next-line no-undef
+  Chart.defaults.global.defaultFontColor = 'white';
+  // eslint-disable-next-line no-undef
+  Chart.defaults.global.defaultFontSize = 14;
+  var ctx = document.getElementById('resultsChart').getContext('2d');
+  document.getElementById('chart-section').style.backgroundColor = 'black';
+  // eslint-disable-next-line no-unused-vars, no-undef
+  var resultsChart = new Chart(ctx, {
+    type: 'horizontalBar',
+    data: {
+      labels: titlesArray,
+      datasets: [{
+        label: 'Number of Votes',
+        data: totalVotes,
+        backgroundColor: 'rgba(0,250,154,.4)',
+        borderColor: 'rgba(0,250,154,1)',
+        hoverBackgroundColor: 'rgba(0,250,154,1)',
+        borderWidth: 2,
+        minBarLength: 2,
+      },
+      {
+        label: 'Total Times Shown',
+        data: totalTimesShown,
+        backgroundColor: 'rgba(72,209,204,.3)',
+        borderColor: 'rgba(72,209,204,1)',
+        hoverBackgroundColor: 'rgba(72,209,204,.5)',
+        borderWidth: 2,
+        minBarLength: 2
+      },
+      ]
+    },
+    options: {
+      title: {
+        display: true,
+        position: 'top',
+        text: 'Voting Results',
+        fontSize: 20
+      },
+      scales: {
+        yAxes: [{
+          stacked: true
+        }],
+        xAxes: [{
+          ticks: {
+            beginAtZero: true,
+            precision: 0,
+            stepSize: 1
+          },
+          gridLines: {
+            color: 'white'
+          }
+        }],
+      },
+      layout: {
+        padding: {
+          right: 20,
+          left: 20,
+          top: 10,
+          bottom: 20
+        }
+      }
+    }
+  });
+}
+
 new Product('img/bag.jpg','R2D2 Luggage');
 new Product('img/banana.jpg','Banana Slicer');
 new Product('img/bathroom.jpg','Toilet Paper Tablet Holder');
@@ -98,3 +175,4 @@ new Product('img/water-can.jpg','Self Filling Water Can');
 new Product('img/wine-glass.jpg','Modern Wine Glass');
 
 threeRandomPictures();
+
