@@ -4,6 +4,7 @@ var titlesArray = [];
 var totalVotes = [];
 var totalTimesShown = [];
 var productsArray = [];
+var productsArrayfromStorage = [];
 var itemsDisplayed = [];
 var clicksLeft = 25;
 var parentElement = document.getElementById('products');
@@ -31,9 +32,19 @@ function findEventTarget() {
   if (clicksLeft === 0) {
     parentElement.removeEventListener('click',findEventTarget);
     parentElement.removeAttribute('id'); // Removes pointer from mouse
+
     resultsList();
+
+    if (localStorage.getItem('busMallProducts') !== null){
+      for (var j = 0; j < productsArray.length; j++) {
+        productsArray[j].numberOfClicks += productsArrayfromStorage[j].numberOfClicks;
+        productsArray[j].timesShown += productsArrayfromStorage[j].timesShown;
+      }
+    }
     clicksAndTimesShown();
     renderChart();
+    var stringinfiedProducts = JSON.stringify(productsArray);
+    localStorage.setItem('busMallProducts', stringinfiedProducts);
   }
 }
 
@@ -123,7 +134,7 @@ function renderChart() {
       title: {
         display: true,
         position: 'top',
-        text: 'Voting Results',
+        text: 'Voting Results from All Sessions',
         fontSize: 20
       },
       scales: {
@@ -134,7 +145,7 @@ function renderChart() {
           ticks: {
             beginAtZero: true,
             precision: 0,
-            stepSize: 1
+            minStepSize: 1
           },
           gridLines: {
             color: 'white'
@@ -153,26 +164,38 @@ function renderChart() {
   });
 }
 
-new Product('img/bag.jpg','R2D2 Luggage');
-new Product('img/banana.jpg','Banana Slicer');
-new Product('img/bathroom.jpg','Toilet Paper Tablet Holder');
-new Product('img/boots.jpg','Toeless Rain Boots');
-new Product('img/breakfast.jpg','Breakfast Maker');
-new Product('img/bubblegum.jpg','Meatball Bubble Gum');
-new Product('img/chair.jpg', 'Round Seat Chair');
-new Product('img/cthulhu.jpg','Cthulhu Action Figure');
-new Product('img/dog-duck.jpg','Dog Duck Beak');
-new Product('img/dragon.jpg','Can of Dragon Meat');
-new Product('img/pen.jpg','Silverware Pen Set');
-new Product('img/pet-sweep.jpg','Pet Sweep');
-new Product('img/scissors.jpg','Pizza Scissors');
-new Product('img/shark.jpg','Shark Slepping Bag');
-new Product('img/sweep.png','Baby Sweep Outfit');
-new Product('img/tauntaun.jpg','Tauntaun Sleeping Bag');
-new Product('img/unicorn.jpg','Unicorn Meat');
-new Product('img/usb.gif','Tentacle USB');
-new Product('img/water-can.jpg','Self Filling Water Can');
-new Product('img/wine-glass.jpg','Modern Wine Glass');
+// First time visiting page, new products are added
+if (localStorage.getItem('busMallProducts') === null) {
+  new Product('img/bag.jpg','R2D2 Luggage');
+  new Product('img/banana.jpg','Banana Slicer');
+  new Product('img/bathroom.jpg','Toilet Paper Tablet Holder');
+  new Product('img/boots.jpg','Toeless Rain Boots');
+  new Product('img/breakfast.jpg','Breakfast Maker');
+  new Product('img/bubblegum.jpg','Meatball Bubble Gum');
+  new Product('img/chair.jpg', 'Round Seat Chair');
+  new Product('img/cthulhu.jpg','Cthulhu Action Figure');
+  new Product('img/dog-duck.jpg','Dog Duck Beak');
+  new Product('img/dragon.jpg','Can of Dragon Meat');
+  new Product('img/pen.jpg','Silverware Pen Set');
+  new Product('img/pet-sweep.jpg','Pet Sweep');
+  new Product('img/scissors.jpg','Pizza Scissors');
+  new Product('img/shark.jpg','Shark Slepping Bag');
+  new Product('img/sweep.png','Baby Sweep Outfit');
+  new Product('img/tauntaun.jpg','Tauntaun Sleeping Bag');
+  new Product('img/unicorn.jpg','Unicorn Meat');
+  new Product('img/usb.gif','Tentacle USB');
+  new Product('img/water-can.jpg','Self Filling Water Can');
+  new Product('img/wine-glass.jpg','Modern Wine Glass');
+}
+else { // On subsequent visits, product info is taken from storage
+  var storedProducts = localStorage.getItem('busMallProducts');
+  productsArrayfromStorage = JSON.parse(storedProducts);
+  for(var i = 0; i < productsArrayfromStorage.length; i++){
+    var productImage = productsArrayfromStorage[i].image;
+    var productName = productsArrayfromStorage[i].title;
+    new Product(productImage,productName);
+  }
+}
 
 threeRandomPictures();
 
