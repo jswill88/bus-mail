@@ -88,36 +88,38 @@ function clicksAndTimesShown() {
 }
 
 function renderChart() {
+  // eslint-disable-next-line no-undef
+  Chart.defaults.global.defaultFontColor = 'white';
+  // eslint-disable-next-line no-undef
+  Chart.defaults.global.defaultFontSize = 14;
   var ctx = document.getElementById('resultsChart').getContext('2d');
+  document.getElementById('chart-section').style.backgroundColor = 'black';
   // eslint-disable-next-line no-unused-vars, no-undef
   var resultsChart = new Chart(ctx, {
     type: 'horizontalBar',
     data: {
       labels: titlesArray,
       datasets: [{
-        label: '# of Votes',
+        label: 'Number of Votes',
         data: totalVotes,
         backgroundColor: 'rgba(0,250,154,.4)',
         borderColor: 'rgba(0,250,154,1)',
         hoverBackgroundColor: 'rgba(0,250,154,1)',
         borderWidth: 2,
-        minBarLength: 2
+        minBarLength: 2,
       },
       {
         label: 'Total Times Shown',
         data: totalTimesShown,
-        backgroundColor: 'rgba(72,209,204,.1)',
+        backgroundColor: 'rgba(72,209,204,.3)',
         borderColor: 'rgba(72,209,204,1)',
-        hoverBackgroundColor: 'rgba(72,209,204,.3)',
+        hoverBackgroundColor: 'rgba(72,209,204,.5)',
         borderWidth: 2,
         minBarLength: 2
       },
       ]
     },
     options: {
-      tooltips: {
-        backgroundColor: 'black',
-      },
       title: {
         display: true,
         position: 'top',
@@ -126,15 +128,26 @@ function renderChart() {
       },
       scales: {
         yAxes: [{
-          stacked: true,
+          stacked: true
         }],
         xAxes: [{
           ticks: {
             beginAtZero: true,
             precision: 0,
             stepSize: 1
+          },
+          gridLines: {
+            color: 'white'
           }
-        }]
+        }],
+      },
+      layout: {
+        padding: {
+          right: 20,
+          left: 20,
+          top: 10,
+          bottom: 20
+        }
       }
     }
   });
