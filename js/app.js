@@ -6,7 +6,7 @@ var totalTimesShown = [];
 var productsArray = [];
 var productsArrayfromStorage = [];
 var itemsDisplayed = [];
-var clicksLeft = 25;
+var clicksLeft = 1;
 var parentElement = document.getElementById('products');
 parentElement.addEventListener('click',findEventTarget);
 var resetButton = document.getElementById('clearMemory');
@@ -137,6 +137,7 @@ function renderChart() {
   Chart.defaults.global.defaultFontSize = 14;
   var ctx = document.getElementById('resultsChart').getContext('2d');
   document.getElementById('chart-section').style.backgroundColor = 'black';
+  document.getElementById('chart-section').style.height = '620px';
   // eslint-disable-next-line no-unused-vars, no-undef
   var resultsChart = new Chart(ctx, {
     type: 'horizontalBar',
