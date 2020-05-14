@@ -107,6 +107,7 @@ main img:last-child {
   float:left;
   overflow: scroll;
   margin-left: 5px;
+  /* background-color and height added in JS */
 }
 #blackBackground {
   background-color: black;
@@ -115,7 +116,7 @@ main img:last-child {
   color: white;
   background-color: black;
   width: 984px;
-  margin-bottom: 250px;
+  margin-bottom: 250px; /* Reduced to 10px in JS when chart is rendered */
   float: left;
   padding: 20px;
   line-height: 19px;
