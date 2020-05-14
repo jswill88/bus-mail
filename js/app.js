@@ -123,11 +123,7 @@ function endOfVotes() {
 // Removes local storage and resets click counter, votes, and times shown
 function removeLocalStorage(){
   localStorage.removeItem('busMallProducts');
-  for (var i = 0; i < productsArray.length; i++) {
-    productsArray[i].timesShown = 0;
-    productsArray[i].numberOfClicks = 0;
-  }
-  clicksLeft = 25;
+  window.location='index.html';
 }
 
 function renderChart() {
