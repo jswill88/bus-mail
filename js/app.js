@@ -67,15 +67,19 @@ function appendImage(imageNumber) {
 // Show voting results
 function resultsList() {
   var resultsSection = document.getElementById('results-section');
+  // Remove text to replace with new list
   resultsSection.removeChild(resultsSection.childNodes[1]);
   document.getElementById('arrow').textContent = '';
+  // Add results list header
   var listParent = document.getElementById('results');
   var resultsHeader = document.createElement('h2');
   resultsHeader.textContent = 'Results for this session';
   listParent.appendChild(resultsHeader);
+  // Add results list
   var productResult;
   for (var i = 0; i < productsArray.length; i++) {
     productResult = document.createElement('li');
+    // Change sentence based on vote and times shown amounts
     var sentenceFirstHalf;
     var sentenceSecondHalf;
     if (productsArray[i].numberOfClicks === 1) {
@@ -92,6 +96,7 @@ function resultsList() {
     listParent.appendChild(productResult);
   }
 }
+
 function randomNumber(arrayLength) {
   return Math.floor(Math.random()*arrayLength);
 }
@@ -108,6 +113,7 @@ function endOfVotes() {
   parentElement.removeEventListener('click',findEventTarget);
   parentElement.removeAttribute('id'); // Removes pointer from mouse
   resultsList();
+  // Add clicks and times shown from storage to display in chart
   if (localStorage.getItem('busMallProducts') !== null){
     for (var j = 0; j < productsArray.length; j++) {
       productsArray[j].numberOfClicks += productsArrayfromStorage[j].numberOfClicks;
@@ -116,6 +122,7 @@ function endOfVotes() {
   }
   clicksAndTimesShown();
   renderChart();
+  // Store productsArray
   var stringinfiedProducts = JSON.stringify(productsArray);
   localStorage.setItem('busMallProducts', stringinfiedProducts);
 }
