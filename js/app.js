@@ -1,5 +1,6 @@
 'use strict';
 
+// Global Variables
 var titlesArray = [];
 var totalVotes = [];
 var totalTimesShown = [];
@@ -12,6 +13,8 @@ parentElement.addEventListener('click',findEventTarget);
 var resetButton = document.getElementById('clearMemory');
 resetButton.addEventListener('click',removeLocalStorage);
 
+
+// Product constructor
 function Product(image, title) {
   this.image = image;
   this.alt = title;
@@ -22,6 +25,8 @@ function Product(image, title) {
   titlesArray.push(this.title);
 }
 
+
+// Finds out which image was clicked on
 function findEventTarget() {
   for (var i = 0; i < productsArray.length; i++) {
     if (event.target.title === productsArray[i].title){
@@ -36,6 +41,7 @@ function findEventTarget() {
   }
 }
 
+// Displays three unique images on the screen
 function threeRandomPictures() {
   parentElement.textContent = '';
   if (itemsDisplayed.length === 6){
@@ -56,6 +62,7 @@ function threeRandomPictures() {
   }
 }
 
+// Appends each image to the page
 function appendImage(imageNumber) {
   var picture = document.createElement('img');
   picture.src = productsArray[imageNumber].image;
@@ -97,10 +104,12 @@ function resultsList() {
   }
 }
 
+// Sends back a random number from 0 to (arrayLength - 1)
 function randomNumber(arrayLength) {
   return Math.floor(Math.random()*arrayLength);
 }
 
+// Keeps track of how many times each item is voted for and shown
 function clicksAndTimesShown() {
   for (var i = 0; i < productsArray.length; i++){
     totalVotes.push(productsArray[i].numberOfClicks);
@@ -133,6 +142,7 @@ function removeLocalStorage(){
   window.location='index.html';
 }
 
+// Prepares page for chart and renders chart
 function renderChart() {
   // Restyle page to make room for chart
   var parent = document.getElementById('chart-section');

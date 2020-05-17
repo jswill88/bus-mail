@@ -1,2 +1,4 @@
 # bus-mail
 Week 3 Lab 
+
+This site contains images of products that a user will look through 3 at a time. They will vote for their favorite object by clicking on the image of that item. After 25 rounds, the user has to stop voting, and the total votes will be displayed in a chart (made with Chart.js) that adds all the votes from this session to the total votes stored on the local server. The votes for the session will be written in the results section on the left side of the page. On the bottom right of the page there is a reset, that will set all counts to zero, erase the votes from local memory, and reload the page for the user to start voting again.
